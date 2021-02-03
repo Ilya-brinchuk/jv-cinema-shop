@@ -1,9 +1,12 @@
 package com.cinema;
 
+import com.cinema.exception.AuthenticationException;
+import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
@@ -40,5 +43,13 @@ public class Main {
         LocalDate localDate = LocalDate.of(2020, 10, 29);
         System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
 
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        System.out.println(authenticationService.register("@gmail.com", "1234444"));
+        try {
+            System.out.println(authenticationService.login("@gmail.com", "1234444"));
+        } catch (AuthenticationException e) {
+            throw new DataProcessingException("Incorrect username or password");
+        }
     }
 }
