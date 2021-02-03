@@ -45,13 +45,11 @@ public class Main {
 
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
-
         System.out.println(authenticationService.register("@gmail.com", "1234444"));
         try {
             System.out.println(authenticationService.login("@gmail.com", "1234444"));
         } catch (AuthenticationException e) {
             throw new DataProcessingException("Incorrect username or password");
         }
-
     }
 }
