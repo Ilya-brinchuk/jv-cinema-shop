@@ -6,10 +6,13 @@ import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.ShoppingCart;
+import com.cinema.model.User;
 import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -46,10 +49,20 @@ public class Main {
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         System.out.println(authenticationService.register("@gmail.com", "1234444"));
+        User user;
         try {
-            System.out.println(authenticationService.login("@gmail.com", "1234444"));
+            user = authenticationService.login("@gmail.com", "1234444");
         } catch (AuthenticationException e) {
             throw new DataProcessingException("Incorrect username or password");
         }
+
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+
+        shoppingCartService.addSession(movieSession, user);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
+        System.out.println(shoppingCart);
+        shoppingCartService.clear(shoppingCart);
+        System.out.println(shoppingCart);
     }
 }
