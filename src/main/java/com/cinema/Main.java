@@ -6,7 +6,6 @@ import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
-import com.cinema.model.User;
 import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
@@ -47,10 +46,9 @@ public class Main {
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-        User user = authenticationService.register("@gmail.com", "1234444");
-        System.out.println(user.toString());
+        System.out.println(authenticationService.register("@gmail.com", "1234444"));
         try {
-            System.out.println(authenticationService.login(user.getEmail(), "1234444"));
+            System.out.println(authenticationService.login("@gmail.com", "1234444"));
         } catch (AuthenticationException e) {
             throw new DataProcessingException("Incorrect username or password");
         }
