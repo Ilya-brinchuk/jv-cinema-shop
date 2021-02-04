@@ -49,4 +49,14 @@ public class MovieSession {
     public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
     }
+
+    @Override
+    public String toString() {
+        return "MovieSession{"
+                + "id=" + id
+                + ", dateTime=" + dateTime
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + '}';
+    }
 }

@@ -45,7 +45,7 @@ public class OrderDaoImpl implements OrderDao {
             query.setParameter("user", user);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find  shopping cart by this user : "
+            throw new DataProcessingException("Can't find  orders by this user: "
                     + user.getEmail(), e);
         }
     }
