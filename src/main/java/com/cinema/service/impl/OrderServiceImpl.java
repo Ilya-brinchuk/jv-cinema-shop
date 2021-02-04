@@ -8,6 +8,7 @@ import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setUser(shoppingCart.getUser());
         order.setTickets(new ArrayList<>(shoppingCart.getTickets()));
+        order.setOrderTime(LocalDateTime.now());
         orderDao.add(order);
         shoppingCartService.clear(shoppingCart);
         return order;

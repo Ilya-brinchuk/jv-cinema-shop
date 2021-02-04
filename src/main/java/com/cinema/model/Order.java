@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Order {
     private List<Ticket> tickets;
     @ManyToOne
     private User user;
+    private LocalDateTime orderTime;
 
     public Long getId() {
         return id;
@@ -44,12 +46,21 @@ public class Order {
         this.user = user;
     }
 
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(LocalDateTime orderTime) {
+        this.orderTime = orderTime;
+    }
+
     @Override
     public String toString() {
         return "Order{"
                 + "id=" + id
                 + ", tickets=" + tickets
                 + ", user=" + user
+                + ", orderTime=" + orderTime
                 + '}';
     }
 }
