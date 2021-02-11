@@ -12,6 +12,7 @@ import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,10 +52,8 @@ public class Main {
         System.out.println(authenticationService.register("@gmail.com", "1234444"));
         authenticationService.register("@gmail.ua", "2323");
         User user;
-        User user2;
         try {
             user = authenticationService.login("@gmail.com", "1234444");
-            user2 = authenticationService.login("@gmail.ua", "2323");
         } catch (AuthenticationException e) {
             throw new DataProcessingException("Incorrect username or password");
         }
@@ -63,10 +62,14 @@ public class Main {
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
         shoppingCartService.addSession(movieSession, user);
-        shoppingCartService.addSession(movieSession, user2);
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         System.out.println(shoppingCart);
-        shoppingCartService.clear(shoppingCart);
+
+        OrderService orderService =
+                (OrderService) injector.getInstance(OrderService.class);
+
+        System.out.println(orderService.completeOrder(shoppingCart));
         System.out.println(shoppingCart);
+        System.out.println(orderService.getOrdersHistory(user));
     }
 }
