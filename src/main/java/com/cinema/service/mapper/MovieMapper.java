@@ -12,6 +12,7 @@ public class MovieMapper implements MapperDto<MovieResponseDto, Movie, MovieRequ
     public MovieResponseDto replaceWithDto(Movie movie) {
         MovieResponseDto movieResponseDto = new MovieResponseDto();
         movieResponseDto.setTitle(movie.getTitle());
+        movieResponseDto.setId(movie.getId());
         return movieResponseDto;
     }
 

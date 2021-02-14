@@ -13,6 +13,7 @@ public class CinemaHallMapper implements MapperDto<CinemaHallResponseDto,
     public CinemaHallResponseDto replaceWithDto(CinemaHall cinemaHall) {
         CinemaHallResponseDto cinemaHallResponseDto = new CinemaHallResponseDto();
         cinemaHallResponseDto.setDescription(cinemaHall.getDescription());
+        cinemaHallResponseDto.setId(cinemaHall.getId());
         return cinemaHallResponseDto;
     }
 
