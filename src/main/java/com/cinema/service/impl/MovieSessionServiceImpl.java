@@ -23,6 +23,16 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
+    public MovieSession update(MovieSession movieSession) {
+        return movieSessionDao.update(movieSession);
+    }
+
+    @Override
+    public MovieSession delete(MovieSession movieSession) {
+        return movieSessionDao.delete(movieSession);
+    }
+
+    @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
