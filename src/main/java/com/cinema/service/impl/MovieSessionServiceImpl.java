@@ -30,13 +30,13 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public void delete(Long id) {
-
         movieSessionDao.delete(id);
     }
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).orElseThrow(() -> new DataProcessingException(""));
+        return movieSessionDao.get(id).orElseThrow(() ->
+                new DataProcessingException("Can't get movie session by id: " + id));
     }
 
     @Override
