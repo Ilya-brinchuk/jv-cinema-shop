@@ -1,6 +1,7 @@
 package com.cinema.service.impl;
 
 import com.cinema.dao.MovieSessionDao;
+import com.cinema.exception.DataProcessingException;
 import com.cinema.model.MovieSession;
 import com.cinema.service.MovieSessionService;
 import java.time.LocalDate;
@@ -30,6 +31,11 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession delete(MovieSession movieSession) {
         return movieSessionDao.delete(movieSession);
+    }
+
+    @Override
+    public MovieSession get(Long id) {
+        return movieSessionDao.get(id).orElseThrow(() -> new DataProcessingException(""));
     }
 
     @Override
