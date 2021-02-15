@@ -3,6 +3,7 @@ package com.cinema.model.dto;
 public class MovieResponseDto {
     private Long id;
     private String title;
+    private String description;
 
     public String getTitle() {
         return title;
@@ -18,5 +19,13 @@ public class MovieResponseDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

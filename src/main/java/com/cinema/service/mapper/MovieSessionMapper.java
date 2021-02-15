@@ -4,7 +4,7 @@ import com.cinema.model.MovieSession;
 import com.cinema.model.dto.MovieSessionRequestDto;
 import com.cinema.model.dto.MovieSessionResponseDto;
 import com.cinema.service.CinemaHallService;
-import com.cinema.service.MapperDto;
+import com.cinema.service.DtoMapper;
 import com.cinema.service.MovieService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieSessionMapper implements MapperDto<MovieSessionResponseDto, MovieSession,
+public class MovieSessionMapper implements DtoMapper<MovieSessionResponseDto, MovieSession,
         MovieSessionRequestDto> {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
@@ -24,7 +24,7 @@ public class MovieSessionMapper implements MapperDto<MovieSessionResponseDto, Mo
     }
 
     @Override
-    public MovieSessionResponseDto replaceWithDto(MovieSession movieSession) {
+    public MovieSessionResponseDto mapToDto(MovieSession movieSession) {
         MovieSessionResponseDto movieSessionResponseDto = new MovieSessionResponseDto();
         movieSessionResponseDto.setMovieTitle(movieSession.getMovie().getTitle());
         movieSessionResponseDto.setId(movieSession.getId());
@@ -34,7 +34,7 @@ public class MovieSessionMapper implements MapperDto<MovieSessionResponseDto, Mo
     }
 
     @Override
-    public MovieSession replaceWithEntity(MovieSessionRequestDto requestDto) {
+    public MovieSession mapToEntity(MovieSessionRequestDto requestDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.get(requestDto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.get(requestDto.getCinemaHallId()));

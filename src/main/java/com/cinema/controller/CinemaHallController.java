@@ -4,7 +4,7 @@ import com.cinema.model.CinemaHall;
 import com.cinema.model.dto.CinemaHallRequestDto;
 import com.cinema.model.dto.CinemaHallResponseDto;
 import com.cinema.service.CinemaHallService;
-import com.cinema.service.MapperDto;
+import com.cinema.service.DtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cinema-halls")
 public class CinemaHallController {
-    private final MapperDto<CinemaHallResponseDto, CinemaHall, CinemaHallRequestDto> mapperDto;
+    private final DtoMapper<CinemaHallResponseDto, CinemaHall, CinemaHallRequestDto> dtoMapper;
     private final CinemaHallService cinemaHallService;
 
     @Autowired
     public CinemaHallController(CinemaHallService cinemaHallService,
-                                MapperDto<CinemaHallResponseDto, CinemaHall,
-                                        CinemaHallRequestDto> mapperDto) {
+                                DtoMapper<CinemaHallResponseDto, CinemaHall,
+                                        CinemaHallRequestDto> dtoMapper) {
         this.cinemaHallService = cinemaHallService;
-        this.mapperDto = mapperDto;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping
     public List<CinemaHallResponseDto> getAll() {
         return cinemaHallService.getAll().stream()
-                .map(mapperDto::replaceWithDto)
+                .map(dtoMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping
     public void create(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
-        cinemaHallService.add(mapperDto.replaceWithEntity(cinemaHallRequestDto));
+        cinemaHallService.add(dtoMapper.mapToEntity(cinemaHallRequestDto));
     }
 }
