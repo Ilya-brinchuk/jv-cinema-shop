@@ -36,7 +36,6 @@ public class MovieSessionMapper implements MapperDto<MovieSessionResponseDto, Mo
     @Override
     public MovieSession replaceWithEntity(MovieSessionRequestDto requestDto) {
         MovieSession movieSession = new MovieSession();
-        movieSession.setId(requestDto.getMovieSessionId());
         movieSession.setMovie(movieService.get(requestDto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.get(requestDto.getCinemaHallId()));
         movieSession.setDateTime(LocalDateTime.parse(requestDto.getShowTime(),
