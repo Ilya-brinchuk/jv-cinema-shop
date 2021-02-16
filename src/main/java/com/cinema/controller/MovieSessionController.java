@@ -3,7 +3,8 @@ package com.cinema.controller;
 import com.cinema.model.MovieSession;
 import com.cinema.model.dto.MovieSessionRequestDto;
 import com.cinema.model.dto.MovieSessionResponseDto;
-import com.cinema.service.DtoMapper;
+import com.cinema.service.MapperToDto;
+import com.cinema.service.MapperToEntity;
 import com.cinema.service.MovieSessionService;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,14 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/movie-sessions")
 public class MovieSessionController {
-    private final DtoMapper<MovieSessionResponseDto, MovieSession,
-                MovieSessionRequestDto> dtoMapper;
+    private final MapperToDto<MovieSession, MovieSessionResponseDto> mapperToDto;
+    private final MapperToEntity<MovieSession, MovieSessionRequestDto> mapperToEntity;
     private final MovieSessionService movieSessionService;
 
     @Autowired
-    public MovieSessionController(DtoMapper<MovieSessionResponseDto, MovieSession,
-            MovieSessionRequestDto> dtoMapper, MovieSessionService movieSessionService) {
-        this.dtoMapper = dtoMapper;
+    public MovieSessionController(MapperToDto<MovieSession, MovieSessionResponseDto> mapperToDto,
+                                  MapperToEntity<MovieSession,
+                                          MovieSessionRequestDto> mapperToEntity,
+                                  MovieSessionService movieSessionService) {
+        this.mapperToDto = mapperToDto;
+        this.mapperToEntity = mapperToEntity;
         this.movieSessionService = movieSessionService;
     }
 
@@ -40,19 +44,19 @@ public class MovieSessionController {
                                                               (pattern = "dd.MM.yyyy")
                                                               LocalDate date) {
         return movieSessionService.findAvailableSessions(movieId, date).stream()
-                .map(dtoMapper::mapToDto)
+                .map(mapperToDto::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping
     public void create(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
-        movieSessionService.add(dtoMapper.mapToEntity(movieSessionRequestDto));
+        movieSessionService.add(mapperToEntity.mapToEntity(movieSessionRequestDto));
     }
 
     @PutMapping("/{id}")
     public void updateMovieSession(@PathVariable Long id,
                                    @RequestBody MovieSessionRequestDto movieSessionRequestDto) {
-        MovieSession movieSession = dtoMapper.mapToEntity(movieSessionRequestDto);
+        MovieSession movieSession = mapperToEntity.mapToEntity(movieSessionRequestDto);
         movieSession.setId(id);
         movieSessionService.update(movieSession);
     }

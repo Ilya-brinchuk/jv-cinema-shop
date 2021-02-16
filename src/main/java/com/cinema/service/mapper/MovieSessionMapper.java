@@ -4,7 +4,8 @@ import com.cinema.model.MovieSession;
 import com.cinema.model.dto.MovieSessionRequestDto;
 import com.cinema.model.dto.MovieSessionResponseDto;
 import com.cinema.service.CinemaHallService;
-import com.cinema.service.DtoMapper;
+import com.cinema.service.MapperToDto;
+import com.cinema.service.MapperToEntity;
 import com.cinema.service.MovieService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieSessionMapper implements DtoMapper<MovieSessionResponseDto, MovieSession,
-        MovieSessionRequestDto> {
+public class MovieSessionMapper implements MapperToDto<MovieSession, MovieSessionResponseDto>,
+        MapperToEntity<MovieSession, MovieSessionRequestDto> {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 
