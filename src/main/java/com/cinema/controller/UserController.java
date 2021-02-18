@@ -1,6 +1,6 @@
 package com.cinema.controller;
 
-import com.cinema.exception.DataProcessingException;
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.User;
 import com.cinema.model.dto.UserResponseDto;
 import com.cinema.service.MapperToDto;

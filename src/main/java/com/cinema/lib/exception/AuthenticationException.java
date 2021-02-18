@@ -1,4 +1,4 @@
-package com.cinema.exception;
+package com.cinema.lib.exception;
 
 public class AuthenticationException extends Exception {
     public AuthenticationException(String message) {

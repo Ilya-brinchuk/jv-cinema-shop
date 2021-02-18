@@ -1,7 +1,7 @@
 package com.cinema.service.impl;
 
 import com.cinema.dao.CinemaHallDao;
-import com.cinema.exception.DataProcessingException;
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.CinemaHall;
 import com.cinema.service.CinemaHallService;
 import java.util.List;

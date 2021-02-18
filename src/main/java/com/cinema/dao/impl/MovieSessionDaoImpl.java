@@ -1,7 +1,7 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.MovieSessionDao;
-import com.cinema.exception.DataProcessingException;
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
