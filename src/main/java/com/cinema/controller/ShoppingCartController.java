@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.MovieSession;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
@@ -37,9 +38,11 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/movie-sessions")
-    public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
+    public void addMovieSession(@RequestParam Long movieSessionId, Authentication authentication) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByEmail(principal.getUsername()).get();
+        User user = userService.findByEmail(principal.getUsername()).orElseThrow(() ->
+                new DataProcessingException("Can't find user by this email"
+                        + principal.getUsername()));
         MovieSession movieSession = movieSessionService.get(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }

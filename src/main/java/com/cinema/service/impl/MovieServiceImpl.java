@@ -1,7 +1,7 @@
 package com.cinema.service.impl;
 
 import com.cinema.dao.MovieDao;
-import com.cinema.exception.DataProcessingException;
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.Movie;
 import com.cinema.service.MovieService;
 import java.util.List;

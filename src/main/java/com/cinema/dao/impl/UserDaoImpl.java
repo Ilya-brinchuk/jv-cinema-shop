@@ -1,7 +1,7 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.UserDao;
-import com.cinema.exception.DataProcessingException;
+import com.cinema.lib.exception.DataProcessingException;
 import com.cinema.model.User;
 import java.util.Optional;
 import org.hibernate.Session;

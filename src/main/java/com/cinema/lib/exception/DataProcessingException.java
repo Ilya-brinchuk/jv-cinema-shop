@@ -1,4 +1,4 @@
-package com.cinema.exception;
+package com.cinema.lib.exception;
 
 public class DataProcessingException extends RuntimeException {
 
