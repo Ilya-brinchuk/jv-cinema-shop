@@ -5,6 +5,7 @@ import com.cinema.model.User;
 import com.cinema.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,13 +23,16 @@ public class CustomUserDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userService.findByEmail(email).get();
+        Optional<User> userByEmail = userService.findByEmail(email);
+        if (userByEmail.isEmpty()) {
+            throw new UsernameNotFoundException("Can't find user by this email: " + email);
+        }
+        User user = userByEmail.get();
         List<String> roles = new ArrayList<>();
         for (Role r : user.getRoles()) {
             roles.add(r.getRoleName());
         }
-        org.springframework.security.core.userdetails.User.UserBuilder userBuilder
-                = org.springframework.security.core.userdetails.User
+        var userBuilder = org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(roles.toArray(new String[0]));
