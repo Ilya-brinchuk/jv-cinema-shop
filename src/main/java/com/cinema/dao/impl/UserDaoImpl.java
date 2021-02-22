@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        String hql = "SELECT u FROM User u left join fetch u.roles WHERE u.email = :email";
+        String hql = "SELECT u FROM User u inner join fetch u.roles WHERE u.email = :email";
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery(hql, User.class);
             query.setParameter("email", email);

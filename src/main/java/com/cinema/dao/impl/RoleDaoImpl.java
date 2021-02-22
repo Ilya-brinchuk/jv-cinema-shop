@@ -50,7 +50,7 @@ public class RoleDaoImpl implements RoleDao {
             query.setParameter("roleName", roleName);
             return query.uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find  user by this role: " + roleName, e);
+            throw new DataProcessingException("Can't find  role by this roleName: " + roleName, e);
         }
     }
 }

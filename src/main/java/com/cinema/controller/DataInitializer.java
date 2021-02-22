@@ -3,26 +3,22 @@ package com.cinema.controller;
 import com.cinema.model.Role;
 import com.cinema.model.User;
 import com.cinema.service.RoleService;
-import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
-import java.util.ArrayList;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-@Controller
-public class InjectData {
+@Component
+public class DataInitializer {
     private RoleService roleService;
     private UserService userService;
-    private ShoppingCartService shoppingCartService;
 
     @Autowired
-    public InjectData(RoleService roleService,
-                      UserService userService,
-                      ShoppingCartService shoppingCartService) {
+    public DataInitializer(RoleService roleService,
+                      UserService userService) {
         this.roleService = roleService;
         this.userService = userService;
-        this.shoppingCartService = shoppingCartService;
     }
 
     @PostConstruct
@@ -36,11 +32,7 @@ public class InjectData {
         User userAdmin = new User();
         userAdmin.setEmail("ilya@gmail.com");
         userAdmin.setPassword("2323");
-        ArrayList<Role> roles = new ArrayList<>();
-        roles.add(roleAdmin);
-        userAdmin.setRoles(roles);
+        userAdmin.setRoles(Set.of(roleAdmin));
         userService.add(userAdmin);
-        shoppingCartService.registerNewShoppingCart(userAdmin);
-
     }
 }
