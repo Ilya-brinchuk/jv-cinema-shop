@@ -1,38 +1,40 @@
 package com.cinema.dao.impl;
 
-import com.cinema.dao.UserDao;
+import com.cinema.dao.RoleDao;
 import com.cinema.lib.exception.DataProcessingException;
-import com.cinema.model.User;
+import com.cinema.model.Role;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class RoleDaoImpl implements RoleDao {
     private final SessionFactory sessionFactory;
 
-    public UserDaoImpl(SessionFactory sessionFactory) {
+    @Autowired
+    public RoleDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public User add(User user) {
+    public void add(Role role) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(user);
+            session.save(role);
             transaction.commit();
-            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't save in data base this user: " + user, e);
+            throw new DataProcessingException("Can't save in data base this role: "
+                    + role, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,23 +43,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        String hql = "SELECT u FROM User u inner join fetch u.roles WHERE u.email = :email";
+    public Optional<Role> getRoleByName(String roleName) {
+        String hql = "SELECT r FROM Role r WHERE r.roleName = :roleName";
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("email", email);
+            Query<Role> query = session.createQuery(hql, Role.class);
+            query.setParameter("roleName", roleName);
             return query.uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find  user by this email: " + email, e);
-        }
-    }
-
-    @Override
-    public Optional<User> get(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(User.class, id));
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get user by this id: " + id, e);
+            throw new DataProcessingException("Can't find  role by this roleName: " + roleName, e);
         }
     }
 }
