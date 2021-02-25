@@ -21,10 +21,10 @@ TO START APP:
 * user: "your username"
 * password: "your password"
 * db.url=jdbc:mysql://localhost/*db_name*?serverTimezone=EET
-4. To log in to the app as an administrator, in the login window enter:
+4. Run application
+5. The logs in as an administrator, in the login window enter:
 * login: "admin@gmail.com"
 * password: "2323"
-5. Run application
 
 AUTHOR:
 ======
